@@ -8,265 +8,95 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
     :root {
-      --clay:     #c4956a;
-      --clay-lt:  #ddb98e;
-      --sage:     #7a8c6e;
-      --sage-lt:  #b5c4a4;
-      --cream:    #fdf6ed;
-      --warm-wh:  #fffbf5;
-      --bark:     #4a3728;
-      --bark-lt:  #7a5c47;
-      --sand:     #e8d5b7;
-      --text:     #3a2e25;
-      --text-lt:  #7a6a5a;
+      --clay: #c4956a; --clay-lt: #ddb98e; --sage: #7a8c6e; --sage-lt: #b5c4a4;
+      --cream: #fdf6ed; --warm-wh: #fffbf5; --bark: #4a3728; --bark-lt: #7a5c47;
+      --sand: #e8d5b7; --text: #3a2e25; --text-lt: #7a6a5a;
     }
-
     html { scroll-behavior: smooth; }
-    body {
-      font-family: 'Jost', sans-serif;
-      background: var(--warm-wh);
-      color: var(--text);
-      overflow-x: hidden;
-    }
-
-    /* ── PAGE SWITCHING ── */
+    body { font-family: 'Jost', sans-serif; background: var(--warm-wh); color: var(--text); overflow-x: hidden; }
     .page { display: none; }
     .page.active { display: block; animation: pageIn .4s ease both; }
-    @keyframes pageIn {
-      from { opacity: 0; transform: translateY(14px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
+    @keyframes pageIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
 
-    /* ── NAV ── */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 1.2rem 4rem;
-      background: rgba(253,246,237,0.95);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--sand);
-    }
-    .nav-logo {
-      display: flex; align-items: center; gap: .7rem;
-      cursor: pointer; text-decoration: none;
-    }
-    .nav-logo-svg { height: 38px; width: auto; }
-    .nav-logo-text { display: flex; flex-direction: column; line-height: 1; }
-    .nav-logo-text .lg-name {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.35rem; font-weight: 600;
-      color: var(--bark); letter-spacing: .02em;
-    }
-    .nav-logo-text .lg-name span { color: var(--clay); }
-    .nav-logo-text .lg-tagline {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: .65rem; font-style: italic;
-      color: var(--bark-lt); letter-spacing: .1em;
-      margin-top: 1px;
-    }
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1rem 4rem; background: rgba(253,246,237,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--sand); }
+    .nav-logo { display: flex; align-items: center; gap: .6rem; cursor: pointer; }
+    .nav-logo-svg { height: 36px; width: auto; }
+    .nav-logo-text { display: flex; flex-direction: column; line-height: 1.1; }
+    .nav-logo-name { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 600; color: var(--bark); letter-spacing: .02em; }
+    .nav-logo-name span { color: var(--clay); }
+    .nav-logo-sub { font-family: 'Cormorant Garamond', serif; font-size: .62rem; font-style: italic; color: var(--bark-lt); letter-spacing: .1em; }
     .nav-links { display: flex; gap: 2.5rem; list-style: none; }
-    .nav-links a {
-      font-size: .85rem; letter-spacing: .12em; text-transform: uppercase;
-      color: var(--text-lt); text-decoration: none;
-      transition: color .25s; position: relative;
-      padding-bottom: 3px; cursor: pointer;
-    }
-    .nav-links a::after {
-      content: ''; position: absolute; bottom: -2px; left: 0; right: 0;
-      height: 1.5px; background: var(--clay);
-      transform: scaleX(0); transition: transform .25s;
-    }
+    .nav-links a { font-size: .85rem; letter-spacing: .12em; text-transform: uppercase; color: var(--text-lt); text-decoration: none; transition: color .25s; position: relative; padding-bottom: 3px; cursor: pointer; }
+    .nav-links a::after { content: ''; position: absolute; bottom: -2px; left: 0; right: 0; height: 1.5px; background: var(--clay); transform: scaleX(0); transition: transform .25s; }
     .nav-links a:hover { color: var(--clay); }
     .nav-links a.active { color: var(--clay); }
     .nav-links a.active::after { transform: scaleX(1); }
-    .nav-cta {
-      background: var(--clay); color: #fff;
-      padding: .55rem 1.4rem; border-radius: 2rem;
-      font-size: .82rem; letter-spacing: .1em; text-transform: uppercase;
-      text-decoration: none; transition: background .25s, transform .2s;
-      cursor: pointer; border: none; font-family: 'Jost', sans-serif;
-    }
+    .nav-cta { background: var(--clay); color: #fff; padding: .55rem 1.4rem; border-radius: 2rem; font-size: .82rem; letter-spacing: .1em; text-transform: uppercase; transition: background .25s, transform .2s; cursor: pointer; border: none; font-family: 'Jost', sans-serif; }
     .nav-cta:hover { background: var(--bark); transform: translateY(-1px); }
-
-    /* hamburger */
     .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
     .hamburger span { display: block; width: 24px; height: 2px; background: var(--bark); border-radius: 2px; transition: all .3s; }
     .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
     .hamburger.open span:nth-child(2) { opacity: 0; }
     .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-    .mobile-menu {
-      display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-      background: var(--cream); z-index: 99; flex-direction: column;
-      align-items: center; justify-content: center; gap: 2.5rem;
-    }
+    .mobile-menu { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--cream); z-index: 99; flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem; }
     .mobile-menu.open { display: flex; }
-    .mobile-menu a {
-      font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 300;
-      color: var(--bark); text-decoration: none; letter-spacing: .05em;
-      transition: color .2s; cursor: pointer;
-    }
+    .mobile-menu a { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 300; color: var(--bark); text-decoration: none; letter-spacing: .05em; transition: color .2s; cursor: pointer; }
     .mobile-menu a:hover { color: var(--clay); }
-    .mobile-menu .m-cta {
-      background: var(--clay); color: #fff;
-      padding: .7rem 2rem; border-radius: 2rem; font-family: 'Jost', sans-serif;
-      font-size: .9rem; letter-spacing: .1em; text-transform: uppercase;
-    }
+    .mobile-menu .m-cta { background: var(--clay); color: #fff; padding: .7rem 2rem; border-radius: 2rem; font-family: 'Jost', sans-serif; font-size: .9rem; letter-spacing: .1em; text-transform: uppercase; }
 
-    /* ── SHARED ── */
-    .section-label {
-      font-size: .75rem; letter-spacing: .18em; text-transform: uppercase;
-      color: var(--clay); margin-bottom: 1rem;
-    }
-    .btn-primary {
-      background: var(--clay); color: #fff;
-      padding: .85rem 2rem; border-radius: 2rem;
-      font-size: .88rem; letter-spacing: .1em; text-transform: uppercase;
-      text-decoration: none; transition: all .25s;
-      border: none; cursor: pointer; display: inline-block;
-    }
+    .section-label { font-size: .75rem; letter-spacing: .18em; text-transform: uppercase; color: var(--clay); margin-bottom: 1rem; }
+    .btn-primary { background: var(--clay); color: #fff; padding: .85rem 2rem; border-radius: 2rem; font-size: .88rem; letter-spacing: .1em; text-transform: uppercase; text-decoration: none; transition: all .25s; border: none; cursor: pointer; display: inline-block; font-family: 'Jost', sans-serif; }
     .btn-primary:hover { background: var(--bark); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(74,55,40,.2); }
-    .btn-outline {
-      background: transparent; color: var(--bark);
-      padding: .85rem 2rem; border-radius: 2rem; border: 1.5px solid var(--sand);
-      font-size: .88rem; letter-spacing: .1em; text-transform: uppercase;
-      text-decoration: none; transition: all .25s; cursor: pointer; display: inline-block;
-      font-family: 'Jost', sans-serif;
-    }
+    .btn-outline { background: transparent; color: var(--bark); padding: .85rem 2rem; border-radius: 2rem; border: 1.5px solid var(--sand); font-size: .88rem; letter-spacing: .1em; text-transform: uppercase; text-decoration: none; transition: all .25s; cursor: pointer; display: inline-block; font-family: 'Jost', sans-serif; }
     .btn-outline:hover { border-color: var(--clay); color: var(--clay); }
 
-    /* ── TAGLINE STRIP ── */
-    .tagline-strip {
-      background: var(--bark); padding: 1.6rem 4rem;
-      display: flex; align-items: center; justify-content: center; gap: 2rem;
-    }
-    .tagline-strip p {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.45rem; font-weight: 300; font-style: italic;
-      color: var(--clay-lt); letter-spacing: .05em; text-align: center;
-    }
+    .tagline-strip { background: var(--bark); padding: 1.6rem 4rem; display: flex; align-items: center; justify-content: center; gap: 2rem; }
+    .tagline-strip p { font-family: 'Cormorant Garamond', serif; font-size: 1.45rem; font-weight: 300; font-style: italic; color: var(--clay-lt); letter-spacing: .05em; text-align: center; }
     .strip-leaf { color: var(--sage-lt); font-size: 1.1rem; }
 
-    /* ── PAGE HEADER (inner pages) ── */
-    .page-header {
-      padding: 8rem 6rem 5rem;
-      background: linear-gradient(135deg, var(--cream) 0%, var(--sand) 100%);
-      position: relative; overflow: hidden;
-    }
-    .page-header::after {
-      content: ''; position: absolute; bottom: -40px; right: -40px;
-      width: 220px; height: 220px; border-radius: 50%;
-      background: var(--clay-lt); opacity: .18;
-    }
-    .page-header h1 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 300; line-height: 1.15;
-      color: var(--bark);
-    }
+    .page-header { padding: 8rem 6rem 5rem; background: linear-gradient(135deg, var(--cream) 0%, var(--sand) 100%); position: relative; overflow: hidden; }
+    .page-header::after { content: ''; position: absolute; bottom: -40px; right: -40px; width: 220px; height: 220px; border-radius: 50%; background: var(--clay-lt); opacity: .18; }
+    .page-header h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 300; line-height: 1.15; color: var(--bark); }
     .page-header h1 em { font-style: italic; color: var(--clay); }
-    .page-header p {
-      max-width: 520px; color: var(--text-lt); font-size: 1rem;
-      line-height: 1.8; margin-top: 1rem;
-    }
+    .page-header p { max-width: 520px; color: var(--text-lt); font-size: 1rem; line-height: 1.8; margin-top: 1rem; }
 
-    /* ── FOOTER ── */
-    footer {
-      background: var(--bark); padding: 3rem 6rem;
-      display: flex; align-items: center; justify-content: space-between;
-      flex-wrap: wrap; gap: 1.5rem;
-    }
-    .footer-logo {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.3rem; font-weight: 600; color: var(--clay-lt); cursor: pointer;
-    }
+    footer { background: var(--bark); padding: 3rem 6rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; }
+    .footer-logo { display: flex; align-items: center; gap: .5rem; cursor: pointer; font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 600; color: var(--clay-lt); }
     .footer-logo span { color: var(--sand); }
+    .footer-logo-svg { height: 26px; width: auto; }
     footer p { font-size: .82rem; color: rgba(253,246,237,.5); }
-    .footer-tagline {
-      font-family: 'Cormorant Garamond', serif;
-      font-style: italic; font-size: 1rem; color: rgba(253,246,237,.45);
-    }
+    .footer-tagline { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1rem; color: rgba(253,246,237,.45); }
     .footer-nav { display: flex; gap: 1.8rem; list-style: none; }
-    .footer-nav a {
-      font-size: .82rem; color: rgba(253,246,237,.55);
-      text-decoration: none; letter-spacing: .08em;
-      transition: color .2s; cursor: pointer;
-    }
+    .footer-nav a { font-size: .82rem; color: rgba(253,246,237,.55); text-decoration: none; letter-spacing: .08em; transition: color .2s; cursor: pointer; }
     .footer-nav a:hover { color: var(--clay-lt); }
 
-    /* ── ANIMATIONS ── */
-    .fade-up {
-      opacity: 0; transform: translateY(24px);
-      transition: opacity .6s ease, transform .6s ease;
-    }
+    .fade-up { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
     .fade-up.visible { opacity: 1; transform: translateY(0); }
 
-    /* ════════════════════════════════════════
-       HOME PAGE
-    ════════════════════════════════════════ */
-    .hero {
-      min-height: 100vh;
-      display: grid; grid-template-columns: 1fr 1fr;
-      padding-top: 80px;
-      position: relative; overflow: hidden;
-    }
-    .hero-left {
-      display: flex; flex-direction: column; justify-content: center;
-      padding: 6rem 3rem 6rem 6rem; position: relative; z-index: 2;
-    }
-    .hero-tag {
-      display: inline-flex; align-items: center; gap: .6rem;
-      background: var(--sand); border-radius: 2rem;
-      padding: .4rem 1rem; font-size: .78rem; letter-spacing: .12em;
-      text-transform: uppercase; color: var(--bark-lt);
-      margin-bottom: 2rem; width: fit-content;
-    }
+    .hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; padding-top: 80px; position: relative; overflow: hidden; }
+    .hero-left { display: flex; flex-direction: column; justify-content: center; padding: 6rem 3rem 6rem 6rem; position: relative; z-index: 2; }
+    .hero-tag { display: inline-flex; align-items: center; gap: .6rem; background: var(--sand); border-radius: 2rem; padding: .4rem 1rem; font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; color: var(--bark-lt); margin-bottom: 2rem; width: fit-content; }
     .hero-tag::before { content: '♥'; color: var(--clay); font-size: .9rem; }
-    .hero h1 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2.8rem, 5vw, 4.2rem);
-      font-weight: 300; line-height: 1.15;
-      color: var(--bark); margin-bottom: 1.5rem;
-    }
+    .hero h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.8rem, 5vw, 4.2rem); font-weight: 300; line-height: 1.15; color: var(--bark); margin-bottom: 1.5rem; }
     .hero h1 em { font-style: italic; color: var(--clay); }
-    .hero-sub {
-      font-size: 1rem; color: var(--text-lt); line-height: 1.8;
-      max-width: 420px; margin-bottom: 2.5rem;
-    }
+    .hero-sub { font-size: 1rem; color: var(--text-lt); line-height: 1.8; max-width: 420px; margin-bottom: 2.5rem; }
     .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
-    .hero-trust {
-      display: flex; align-items: center; gap: 1rem;
-      margin-top: 3rem; padding-top: 2rem;
-      border-top: 1px solid var(--sand);
-    }
+    .hero-trust { display: flex; align-items: center; gap: 1rem; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--sand); }
     .trust-hearts { color: var(--clay); font-size: 1.1rem; letter-spacing: .15rem; }
     .trust-text { font-size: .82rem; color: var(--text-lt); line-height: 1.5; }
     .trust-text strong { color: var(--bark); display: block; }
     .hero-right { position: relative; overflow: hidden; background: var(--sand); }
     .hero-right img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .hero-blob {
-      position: absolute; bottom: -60px; left: -60px;
-      width: 300px; height: 300px; border-radius: 50%;
-      background: var(--sage-lt); opacity: .25; z-index: 1;
-    }
+    .hero-blob { position: absolute; bottom: -60px; left: -60px; width: 300px; height: 300px; border-radius: 50%; background: var(--sage-lt); opacity: .25; z-index: 1; }
 
     .home-about { display: grid; grid-template-columns: 1fr 1fr; min-height: 540px; }
-    .home-about-photos {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
-      padding: 3rem; background: var(--cream);
-    }
-    .home-about-photos img { border-radius: 1rem; object-fit: cover; width: 100%; height: 100%; display: block; }
+    .home-about-photos { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 3rem; background: var(--cream); }
     .home-about-photos .span2 { grid-column: span 2; min-height: 230px; border-radius: 1rem; overflow: hidden; }
     .home-about-photos .span1 { min-height: 200px; border-radius: 1rem; overflow: hidden; }
-    .home-about-text {
-      padding: 5rem 5rem 5rem 4rem;
-      display: flex; flex-direction: column; justify-content: center;
-    }
-    .home-about-text h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 300; line-height: 1.2;
-      color: var(--bark); margin-bottom: 1.5rem;
-    }
+    .home-about-photos img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .home-about-text { padding: 5rem 5rem 5rem 4rem; display: flex; flex-direction: column; justify-content: center; }
+    .home-about-text h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 300; line-height: 1.2; color: var(--bark); margin-bottom: 1.5rem; }
     .home-about-text h2 em { font-style: italic; color: var(--clay); }
     .home-about-text p { font-size: .97rem; color: var(--text-lt); line-height: 1.9; margin-bottom: 1.2rem; }
     .values-row { display: flex; gap: 2rem; margin-top: 1.5rem; flex-wrap: wrap; }
@@ -276,337 +106,136 @@
 
     .home-services { padding: 7rem 6rem; background: var(--warm-wh); }
     .home-services-header { text-align: center; margin-bottom: 4rem; }
-    .home-services-header h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2rem, 4vw, 3rem); font-weight: 300;
-      color: var(--bark); margin-bottom: .8rem;
-    }
+    .home-services-header h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 300; color: var(--bark); margin-bottom: .8rem; }
     .home-services-header h2 em { font-style: italic; color: var(--clay); }
     .home-services-header p { color: var(--text-lt); font-size: .95rem; max-width: 500px; margin: 0 auto; line-height: 1.8; }
     .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
-    .service-card {
-      background: var(--cream); border-radius: 1.2rem; padding: 2.2rem;
-      border: 1px solid var(--sand); transition: all .3s;
-      position: relative; overflow: hidden;
-    }
-    .service-card::before {
-      content: ''; position: absolute; top: 0; left: 0;
-      width: 4px; height: 100%; background: var(--clay);
-      transform: scaleY(0); transform-origin: bottom; transition: transform .3s;
-    }
+    .service-card { background: var(--cream); border-radius: 1.2rem; padding: 2.2rem; border: 1px solid var(--sand); transition: all .3s; position: relative; overflow: hidden; }
+    .service-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--clay); transform: scaleY(0); transform-origin: bottom; transition: transform .3s; }
     .service-card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(74,55,40,.1); }
     .service-card:hover::before { transform: scaleY(1); }
     .service-icon { font-size: 2rem; margin-bottom: 1rem; }
-    .service-card h3 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.3rem; font-weight: 600; color: var(--bark); margin-bottom: .6rem;
-    }
+    .service-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 600; color: var(--bark); margin-bottom: .6rem; }
     .service-card p { font-size: .88rem; color: var(--text-lt); line-height: 1.75; }
     .services-cta { text-align: center; margin-top: 3rem; }
 
-    .info-band {
-      background: var(--sage); padding: 5rem 6rem;
-      display: grid; grid-template-columns: 1fr 1fr 1fr;
-      gap: 3rem; align-items: start;
-    }
-    .info-block h3 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.3rem; font-weight: 600; color: var(--cream);
-      margin-bottom: 1rem; padding-bottom: .6rem;
-      border-bottom: 1px solid rgba(255,255,255,.2);
-    }
-    .info-block p, .info-block a {
-      font-size: .9rem; color: rgba(253,246,237,.8);
-      line-height: 1.9; text-decoration: none; display: block;
-    }
+    .info-band { background: var(--sage); padding: 5rem 6rem; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 3rem; align-items: start; }
+    .info-block h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 600; color: var(--cream); margin-bottom: 1rem; padding-bottom: .6rem; border-bottom: 1px solid rgba(255,255,255,.2); }
+    .info-block p, .info-block a { font-size: .9rem; color: rgba(253,246,237,.8); line-height: 1.9; text-decoration: none; display: block; }
     .info-block a:hover { color: var(--cream); }
 
-    /* ════════════════════════════════════════
-       ABOUT PAGE
-    ════════════════════════════════════════ */
-    .about-story {
-      padding: 6rem 6rem; display: grid; grid-template-columns: 1fr 1fr;
-      gap: 5rem; align-items: center; background: var(--warm-wh);
-    }
-    .about-story-text h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 300; line-height: 1.25;
-      color: var(--bark); margin-bottom: 1.5rem;
-    }
+    .about-story { padding: 6rem; display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; background: var(--warm-wh); }
+    .about-story-text h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 300; line-height: 1.25; color: var(--bark); margin-bottom: 1.5rem; }
     .about-story-text h2 em { font-style: italic; color: var(--clay); }
     .about-story-text p { font-size: .97rem; color: var(--text-lt); line-height: 1.9; margin-bottom: 1.2rem; }
     .about-photos-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    .about-photos-col img { border-radius: 1rem; object-fit: cover; width: 100%; height: 100%; display: block; }
     .about-photos-col .span2 { grid-column: span 2; min-height: 260px; border-radius: 1rem; overflow: hidden; }
     .about-photos-col .span1 { min-height: 200px; border-radius: 1rem; overflow: hidden; }
+    .about-photos-col img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 1rem; }
 
-    .values-section { background: var(--cream); padding: 6rem 6rem; }
+    .values-section { background: var(--cream); padding: 6rem; }
     .values-section-header { text-align: center; margin-bottom: 4rem; }
-    .values-section-header h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 300; color: var(--bark);
-    }
+    .values-section-header h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 300; color: var(--bark); }
     .values-section-header h2 em { font-style: italic; color: var(--clay); }
     .values-section-header p { color: var(--text-lt); font-size: .95rem; margin-top: .8rem; max-width: 500px; margin-left: auto; margin-right: auto; line-height: 1.8; }
     .values-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
-    .value-card {
-      background: var(--warm-wh); border-radius: 1.2rem;
-      padding: 2.2rem; border: 1px solid var(--sand);
-      text-align: center; transition: transform .3s, box-shadow .3s;
-    }
+    .value-card { background: var(--warm-wh); border-radius: 1.2rem; padding: 2.2rem; border: 1px solid var(--sand); text-align: center; transition: transform .3s, box-shadow .3s; }
     .value-card:hover { transform: translateY(-4px); box-shadow: 0 10px 28px rgba(74,55,40,.09); }
     .value-card-icon { font-size: 2.4rem; margin-bottom: 1rem; }
-    .value-card h3 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.4rem; font-weight: 600; color: var(--bark); margin-bottom: .6rem;
-    }
+    .value-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 600; color: var(--bark); margin-bottom: .6rem; }
     .value-card p { font-size: .88rem; color: var(--text-lt); line-height: 1.75; }
-
     .about-cta { background: var(--bark); padding: 5rem 6rem; text-align: center; }
-    .about-cta h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(1.8rem, 3vw, 2.8rem); font-weight: 300;
-      color: var(--cream); margin-bottom: 1rem;
-    }
+    .about-cta h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.8rem, 3vw, 2.8rem); font-weight: 300; color: var(--cream); margin-bottom: 1rem; }
     .about-cta h2 em { font-style: italic; color: var(--clay-lt); }
     .about-cta p { color: rgba(253,246,237,.65); font-size: .95rem; margin-bottom: 2rem; }
 
-    /* ════════════════════════════════════════
-       SERVICES PAGE
-    ════════════════════════════════════════ */
-    .services-main { padding: 6rem 6rem; background: var(--warm-wh); }
+    .services-main { padding: 6rem; background: var(--warm-wh); }
     .services-intro { max-width: 680px; margin: 0 auto 4rem; text-align: center; }
-    .services-intro h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 300; color: var(--bark); margin-bottom: 1rem;
-    }
+    .services-intro h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 300; color: var(--bark); margin-bottom: 1rem; }
     .services-intro h2 em { font-style: italic; color: var(--clay); }
     .services-intro p { font-size: .97rem; color: var(--text-lt); line-height: 1.9; }
     .services-full-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
-    .service-full-card {
-      background: var(--cream); border-radius: 1.4rem;
-      padding: 2.8rem; border: 1px solid var(--sand);
-      transition: all .3s; position: relative; overflow: hidden;
-      display: flex; gap: 1.6rem;
-    }
-    .service-full-card::before {
-      content: ''; position: absolute; top: 0; left: 0;
-      width: 5px; height: 100%; background: var(--clay);
-      transform: scaleY(0); transform-origin: bottom; transition: transform .3s;
-    }
+    .service-full-card { background: var(--cream); border-radius: 1.4rem; padding: 2.8rem; border: 1px solid var(--sand); transition: all .3s; position: relative; overflow: hidden; display: flex; gap: 1.6rem; }
+    .service-full-card::before { content: ''; position: absolute; top: 0; left: 0; width: 5px; height: 100%; background: var(--clay); transform: scaleY(0); transform-origin: bottom; transition: transform .3s; }
     .service-full-card:hover { transform: translateY(-4px); box-shadow: 0 14px 36px rgba(74,55,40,.1); }
     .service-full-card:hover::before { transform: scaleY(1); }
-    .sfc-icon {
-      font-size: 2.4rem; flex-shrink: 0;
-      width: 56px; height: 56px;
-      background: var(--sand); border-radius: .8rem;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .sfc-body h3 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.45rem; font-weight: 600; color: var(--bark); margin-bottom: .5rem;
-    }
+    .sfc-icon { font-size: 2.4rem; flex-shrink: 0; width: 56px; height: 56px; background: var(--sand); border-radius: .8rem; display: flex; align-items: center; justify-content: center; }
+    .sfc-body h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.45rem; font-weight: 600; color: var(--bark); margin-bottom: .5rem; }
     .sfc-body p { font-size: .9rem; color: var(--text-lt); line-height: 1.8; }
     .sfc-tags { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1rem; }
-    .sfc-tag {
-      background: var(--sand); border-radius: 2rem;
-      padding: .25rem .75rem; font-size: .74rem;
-      letter-spacing: .08em; color: var(--bark-lt);
-    }
-
-    .how-it-works { background: var(--cream); padding: 6rem 6rem; }
+    .sfc-tag { background: var(--sand); border-radius: 2rem; padding: .25rem .75rem; font-size: .74rem; letter-spacing: .08em; color: var(--bark-lt); }
+    .how-it-works { background: var(--cream); padding: 6rem; }
     .hiw-header { text-align: center; margin-bottom: 4rem; }
-    .hiw-header h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 300; color: var(--bark);
-    }
+    .hiw-header h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 300; color: var(--bark); }
     .hiw-header h2 em { font-style: italic; color: var(--clay); }
     .hiw-header p { color: var(--text-lt); margin-top: .8rem; font-size: .95rem; line-height: 1.8; }
     .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; position: relative; }
-    .steps::before {
-      content: ''; position: absolute;
-      top: 28px; left: calc(12.5% + 14px); right: calc(12.5% + 14px);
-      height: 1px; background: var(--sand);
-    }
+    .steps::before { content: ''; position: absolute; top: 28px; left: calc(12.5% + 14px); right: calc(12.5% + 14px); height: 1px; background: var(--sand); }
     .step { text-align: center; }
-    .step-num {
-      width: 56px; height: 56px; border-radius: 50%;
-      background: var(--clay); color: #fff;
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.5rem; font-weight: 600;
-      display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 1.2rem; position: relative; z-index: 1;
-    }
-    .step h4 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.15rem; font-weight: 600; color: var(--bark); margin-bottom: .5rem;
-    }
+    .step-num { width: 56px; height: 56px; border-radius: 50%; background: var(--clay); color: #fff; font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 600; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.2rem; position: relative; z-index: 1; }
+    .step h4 { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-weight: 600; color: var(--bark); margin-bottom: .5rem; }
     .step p { font-size: .85rem; color: var(--text-lt); line-height: 1.7; }
-
     .pricing-note { background: var(--sage); padding: 4rem 6rem; text-align: center; }
-    .pricing-note h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 300;
-      color: var(--cream); margin-bottom: 1rem;
-    }
+    .pricing-note h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 300; color: var(--cream); margin-bottom: 1rem; }
     .pricing-note h2 em { font-style: italic; color: var(--clay-lt); }
     .pricing-note p { color: rgba(253,246,237,.75); font-size: .95rem; line-height: 1.8; max-width: 560px; margin: 0 auto 2rem; }
 
-    /* ════════════════════════════════════════
-       FAQ PAGE
-    ════════════════════════════════════════ */
     .faq-main { padding: 5rem 6rem 7rem; background: var(--warm-wh); }
     .faq-intro { max-width: 680px; margin: 0 auto 4rem; text-align: center; }
-    .faq-intro h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 300; color: var(--bark); margin-bottom: 1rem;
-    }
+    .faq-intro h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 300; color: var(--bark); margin-bottom: 1rem; }
     .faq-intro h2 em { font-style: italic; color: var(--clay); }
     .faq-intro p { font-size: .97rem; color: var(--text-lt); line-height: 1.9; }
     .faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; max-width: 1100px; margin: 0 auto; }
-    .faq-item {
-      background: var(--cream); border-radius: 1.2rem;
-      border: 1px solid var(--sand); overflow: hidden;
-      transition: box-shadow .3s;
-    }
+    .faq-item { background: var(--cream); border-radius: 1.2rem; border: 1px solid var(--sand); overflow: hidden; transition: box-shadow .3s; }
     .faq-item:hover { box-shadow: 0 8px 24px rgba(74,55,40,.08); }
-    .faq-question {
-      width: 100%; text-align: left; padding: 1.6rem 2rem;
-      background: none; border: none; cursor: pointer;
-      display: flex; align-items: center; justify-content: space-between;
-      gap: 1rem; font-family: 'Cormorant Garamond', serif;
-      font-size: 1.2rem; font-weight: 600; color: var(--bark);
-      transition: color .2s;
-    }
+    .faq-question { width: 100%; text-align: left; padding: 1.6rem 2rem; background: none; border: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 1rem; font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 600; color: var(--bark); transition: color .2s; }
     .faq-question:hover { color: var(--clay); }
-    .faq-arrow {
-      width: 28px; height: 28px; border-radius: 50%;
-      background: var(--sand); display: flex; align-items: center; justify-content: center;
-      font-size: .85rem; flex-shrink: 0; transition: transform .3s, background .2s;
-      color: var(--bark-lt);
-    }
+    .faq-arrow { width: 28px; height: 28px; border-radius: 50%; background: var(--sand); display: flex; align-items: center; justify-content: center; font-size: .85rem; flex-shrink: 0; transition: transform .3s, background .2s; color: var(--bark-lt); }
     .faq-item.open .faq-arrow { transform: rotate(180deg); background: var(--clay); color: #fff; }
-    .faq-answer {
-      max-height: 0; overflow: hidden;
-      transition: max-height .4s ease, padding .3s ease;
-      font-size: .93rem; color: var(--text-lt); line-height: 1.85;
-      padding: 0 2rem;
-    }
+    .faq-answer { max-height: 0; overflow: hidden; transition: max-height .4s ease, padding .3s ease; font-size: .93rem; color: var(--text-lt); line-height: 1.85; padding: 0 2rem; }
     .faq-item.open .faq-answer { max-height: 300px; padding: 0 2rem 1.6rem; }
-
     .faq-cta-band { background: var(--bark); padding: 5rem 6rem; text-align: center; }
-    .faq-cta-band h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 300;
-      color: var(--cream); margin-bottom: 1rem;
-    }
+    .faq-cta-band h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 300; color: var(--cream); margin-bottom: 1rem; }
     .faq-cta-band h2 em { font-style: italic; color: var(--clay-lt); }
-    .faq-cta-band p { color: rgba(253,246,237,.65); font-size: .95rem; margin-bottom: 2rem; line-height: 1.8; max-width: 520px; margin-left: auto; margin-right: auto; margin-bottom: 2rem; }
+    .faq-cta-band p { color: rgba(253,246,237,.65); font-size: .95rem; line-height: 1.8; max-width: 520px; margin: 0 auto 2rem; }
 
-    /* ════════════════════════════════════════
-       CONTACT PAGE
-    ════════════════════════════════════════ */
-    .contact-main {
-      padding: 5rem 6rem 7rem; background: var(--warm-wh);
-      display: grid; grid-template-columns: 1fr 1.1fr;
-      gap: 5rem; align-items: start;
-    }
-    .contact-left h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 300; line-height: 1.2;
-      color: var(--bark); margin-bottom: 1rem;
-    }
+    .contact-main { padding: 5rem 6rem 7rem; background: var(--warm-wh); display: grid; grid-template-columns: 1fr 1.1fr; gap: 5rem; align-items: start; }
+    .contact-left h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 300; line-height: 1.2; color: var(--bark); margin-bottom: 1rem; }
     .contact-left h2 em { font-style: italic; color: var(--clay); }
     .contact-left > p { color: var(--text-lt); font-size: .97rem; line-height: 1.8; margin-bottom: 2.5rem; }
     .contact-cards { display: flex; flex-direction: column; gap: 1.2rem; }
-    .contact-card {
-      display: flex; align-items: flex-start; gap: 1.2rem;
-      background: var(--cream); border-radius: 1rem;
-      padding: 1.4rem 1.6rem; border: 1px solid var(--sand);
-      transition: transform .25s, box-shadow .25s;
-    }
+    .contact-card { display: flex; align-items: flex-start; gap: 1.2rem; background: var(--cream); border-radius: 1rem; padding: 1.4rem 1.6rem; border: 1px solid var(--sand); transition: transform .25s, box-shadow .25s; }
     .contact-card:hover { transform: translateX(4px); box-shadow: 0 6px 20px rgba(74,55,40,.08); }
-    .cc-icon {
-      width: 46px; height: 46px; border-radius: 50%;
-      background: var(--sand); display: flex; align-items: center;
-      justify-content: center; font-size: 1.2rem; flex-shrink: 0;
-    }
-    .cc-body strong {
-      display: block; font-size: .72rem; letter-spacing: .12em;
-      text-transform: uppercase; color: var(--bark-lt); margin-bottom: .25rem;
-    }
-    .cc-body p, .cc-body a {
-      font-size: .95rem; color: var(--text); text-decoration: none; line-height: 1.5;
-    }
+    .cc-icon { width: 46px; height: 46px; border-radius: 50%; background: var(--sand); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
+    .cc-body strong { display: block; font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; color: var(--bark-lt); margin-bottom: .25rem; }
+    .cc-body p, .cc-body a { font-size: .95rem; color: var(--text); text-decoration: none; line-height: 1.5; }
     .cc-body a:hover { color: var(--clay); }
-
-    .contact-form-box {
-      background: var(--cream); border-radius: 1.5rem;
-      padding: 3rem; border: 1px solid var(--sand);
-    }
-    .contact-form-box h3 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.8rem; font-weight: 400; color: var(--bark); margin-bottom: .4rem;
-    }
+    .contact-form-box { background: var(--cream); border-radius: 1.5rem; padding: 3rem; border: 1px solid var(--sand); }
+    .contact-form-box h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 400; color: var(--bark); margin-bottom: .4rem; }
     .contact-form-box > p { font-size: .87rem; color: var(--text-lt); margin-bottom: 1.8rem; }
     .form-group { margin-bottom: 1.2rem; }
-    .form-group label {
-      display: block; font-size: .73rem; letter-spacing: .1em;
-      text-transform: uppercase; color: var(--bark-lt); margin-bottom: .4rem;
-    }
+    .form-group label { display: block; font-size: .73rem; letter-spacing: .1em; text-transform: uppercase; color: var(--bark-lt); margin-bottom: .4rem; }
     .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-    .form-group input,
-    .form-group textarea {
-      width: 100%; padding: .8rem 1rem;
-      border: 1.5px solid var(--sand); border-radius: .7rem;
-      background: var(--warm-wh); color: var(--text);
-      font-family: 'Jost', sans-serif; font-size: .9rem;
-      transition: border-color .2s, box-shadow .2s; outline: none; appearance: none;
-    }
-    .form-group input:focus,
-    .form-group textarea:focus { border-color: var(--clay); box-shadow: 0 0 0 3px rgba(196,149,106,.12); }
+    .form-group input, .form-group textarea { width: 100%; padding: .8rem 1rem; border: 1.5px solid var(--sand); border-radius: .7rem; background: var(--warm-wh); color: var(--text); font-family: 'Jost', sans-serif; font-size: .9rem; transition: border-color .2s, box-shadow .2s; outline: none; appearance: none; }
+    .form-group input:focus, .form-group textarea:focus { border-color: var(--clay); box-shadow: 0 0 0 3px rgba(196,149,106,.12); }
     .form-group textarea { resize: vertical; min-height: 110px; }
-    .form-submit {
-      width: 100%; padding: 1rem;
-      background: var(--clay); color: #fff;
-      border: none; border-radius: 2rem; cursor: pointer;
-      font-family: 'Jost', sans-serif; font-size: .88rem;
-      letter-spacing: .12em; text-transform: uppercase;
-      transition: all .25s; margin-top: .5rem;
-    }
+    .form-submit { width: 100%; padding: 1rem; background: var(--clay); color: #fff; border: none; border-radius: 2rem; cursor: pointer; font-family: 'Jost', sans-serif; font-size: .88rem; letter-spacing: .12em; text-transform: uppercase; transition: all .25s; margin-top: .5rem; }
     .form-submit:hover { background: var(--bark); transform: translateY(-1px); }
     .form-success { display: none; text-align: center; padding: 2rem; }
     .form-success .success-icon { font-size: 3rem; margin-bottom: 1rem; }
-    .form-success h4 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.6rem; color: var(--bark); margin-bottom: .5rem;
-    }
+    .form-success h4 { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; color: var(--bark); margin-bottom: .5rem; }
     .form-success p { font-size: .9rem; color: var(--text-lt); line-height: 1.7; }
-
     .service-area { background: var(--cream); padding: 5rem 6rem; }
-    .service-area h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 300;
-      color: var(--bark); margin-bottom: 2rem;
-    }
+    .service-area h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 300; color: var(--bark); margin-bottom: 2rem; }
     .service-area h2 em { font-style: italic; color: var(--clay); }
-    .map-placeholder {
-      height: 280px; border-radius: 1.2rem;
-      background: linear-gradient(135deg, var(--sand), var(--sage-lt));
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      gap: 1rem; color: var(--bark-lt);
-    }
+    .map-placeholder { height: 280px; border-radius: 1.2rem; background: linear-gradient(135deg, var(--sand), var(--sage-lt)); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; color: var(--bark-lt); }
     .map-placeholder .map-icon { font-size: 3rem; opacity: .5; }
     .map-placeholder p { font-size: .9rem; letter-spacing: .08em; opacity: .65; }
     .area-tags { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 2rem; }
-    .area-tag {
-      background: var(--sand); border-radius: 2rem;
-      padding: .3rem .9rem; font-size: .82rem; color: var(--bark-lt);
-    }
+    .area-tag { background: var(--sand); border-radius: 2rem; padding: .3rem .9rem; font-size: .82rem; color: var(--bark-lt); }
 
-    /* ── RESPONSIVE ── */
     @media (max-width: 1024px) {
-      nav { padding: 1.2rem 2.5rem; }
+      nav { padding: 1rem 2.5rem; }
       .hero { grid-template-columns: 1fr; }
       .hero-left { padding: 5rem 2.5rem 3rem; }
       .hero-right { min-height: 360px; }
@@ -671,7 +300,6 @@
 </head>
 <body>
 
-<!-- NAV -->
 <nav id="navbar">
   <div class="nav-logo" onclick="showPage('home')">
     <svg class="nav-logo-svg" viewBox="0 0 40 48" xmlns="http://www.w3.org/2000/svg">
@@ -681,8 +309,8 @@
       <path d="M20 7 C27 2, 33 6, 30 12 C28 16, 22 12, 20 7Z" fill="#7a8c6e"/>
     </svg>
     <div class="nav-logo-text">
-      <span class="lg-name">Loving <span>Guardian</span></span>
-      <span class="lg-tagline">Senior Care with Heart</span>
+      <span class="nav-logo-name">Loving <span>Guardian</span></span>
+      <span class="nav-logo-sub">Senior Care with Heart</span>
     </div>
   </div>
   <ul class="nav-links">
@@ -698,7 +326,6 @@
   </button>
 </nav>
 
-<!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobileMenu">
   <a onclick="showPage('home'); closeMobile()">Home</a>
   <a onclick="showPage('about'); closeMobile()">About</a>
@@ -708,7 +335,7 @@
   <a onclick="showPage('contact'); closeMobile()" class="m-cta">Get Care Now</a>
 </div>
 
-<!-- ══════════════ HOME PAGE ══════════════ -->
+<!-- HOME -->
 <div id="page-home" class="page active">
   <section class="hero">
     <div class="hero-left">
@@ -741,7 +368,7 @@
 
   <section class="home-about">
     <div class="home-about-photos">
-      <div class="span2"><img src="age-cymru-2obyM4zYt3Y-unsplash-new.jpg" alt="Caregiver holding hands with senior, smiling"></div>
+      <div class="span2"><img src="age-cymru-2obyM4zYt3Y-unsplash-new.jpg" alt="Caregiver holding hands with senior"></div>
       <div class="span1"><img src="raj-tuladhar-UlG-z-Kz_AI-unsplash.webp" alt="Caregiver and senior in park"></div>
       <div class="span1"><img src="age-cymru-dMhB7w99ju8-unsplash.webp" alt="Caregiver laughing with senior"></div>
     </div>
@@ -789,7 +416,7 @@
     <div class="info-block fade-up">
       <h3>Contact Us</h3>
       <a href="tel:4694965566">📞 (469) 496-5566</a>
-      <a href="/cdn-cgi/l/email-protection#3044595e554251705c57535142555c5c531e535f5d">✉️ <span class="__cf_email__" data-cfemail="bfcbd6d1dacddeffd3d8dcdecddad3d3dc91dcd0d2">[email&#160;protected]</span></a>
+      <a href="mailto:tinera@lgcarellc.com">✉️ tinera&#64;lgcarellc.com</a>
     </div>
     <div class="info-block fade-up">
       <h3>Serving the DFW Area</h3>
@@ -798,7 +425,15 @@
   </div>
 
   <footer>
-    <div class="footer-logo" onclick="showPage('home')"><svg style="height:28px;width:auto;margin-right:8px;vertical-align:middle" viewBox="0 0 40 48" xmlns="http://www.w3.org/2000/svg"><path d="M20 44 C20 44, 2 30, 2 16 C2 8, 9 4, 14 9 C16 6, 20 5, 20 5 C20 5, 24 6, 26 9 C31 4, 38 8, 38 16 C38 30, 20 44, 20 44Z" fill="#ddb98e"/><path d="M20 14 C20 6, 20 2, 20 2" stroke="#b5c4a4" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M20 10 C13 6, 7 9, 10 15 C12 19, 18 15, 20 10Z" fill="#b5c4a4"/><path d="M20 7 C27 2, 33 6, 30 12 C28 16, 22 12, 20 7Z" fill="#b5c4a4"/></svg>Loving <span>Guardian</span> LLC</div>
+    <div class="footer-logo" onclick="showPage('home')">
+      <svg class="footer-logo-svg" viewBox="0 0 40 48" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20 44 C20 44, 2 30, 2 16 C2 8, 9 4, 14 9 C16 6, 20 5, 20 5 C20 5, 24 6, 26 9 C31 4, 38 8, 38 16 C38 30, 20 44, 20 44Z" fill="#ddb98e"/>
+        <path d="M20 14 C20 6, 20 2, 20 2" stroke="#b5c4a4" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <path d="M20 10 C13 6, 7 9, 10 15 C12 19, 18 15, 20 10Z" fill="#b5c4a4"/>
+        <path d="M20 7 C27 2, 33 6, 30 12 C28 16, 22 12, 20 7Z" fill="#b5c4a4"/>
+      </svg>
+      Loving <span>Guardian</span> LLC
+    </div>
     <ul class="footer-nav">
       <li><a onclick="showPage('about')">About</a></li>
       <li><a onclick="showPage('services')">Services</a></li>
@@ -810,20 +445,18 @@
   </footer>
 </div>
 
-<!-- ══════════════ ABOUT PAGE ══════════════ -->
+<!-- ABOUT -->
 <div id="page-about" class="page">
   <div class="page-header">
     <div class="section-label">About Loving Guardian</div>
     <h1>Care rooted in <em>compassion</em></h1>
     <p>We are a locally rooted, family-centered senior care agency serving the DFW area — built on the belief that every person deserves dignity, warmth, and genuine connection.</p>
   </div>
-
   <div class="tagline-strip">
     <span class="strip-leaf">🌿</span>
     <p>"Helping hand with a loving heart!"</p>
     <span class="strip-leaf">🌿</span>
   </div>
-
   <section class="about-story">
     <div class="about-story-text fade-up">
       <div class="section-label">Our Story</div>
@@ -838,7 +471,6 @@
       <div class="span1"><img src="age-cymru-2obyM4zYt3Y-unsplash.webp" alt="Caregiver and senior connecting"></div>
     </div>
   </section>
-
   <section class="values-section">
     <div class="values-section-header fade-up">
       <div class="section-label">What We Stand For</div>
@@ -854,15 +486,21 @@
       <div class="value-card fade-up"><div class="value-card-icon">📅</div><h3>Consistency</h3><p>Routine and reliability matter. We are here Monday through Sunday so your loved one always has support.</p></div>
     </div>
   </section>
-
   <div class="about-cta fade-up">
     <h2>Ready to find care for your <em>loved one?</em></h2>
     <p>Reach out today and we'll put together a personalized care plan.</p>
     <button class="btn-primary" onclick="showPage('contact')">Get In Touch</button>
   </div>
-
   <footer>
-    <div class="footer-logo" onclick="showPage('home')"><svg style="height:28px;width:auto;margin-right:8px;vertical-align:middle" viewBox="0 0 40 48" xmlns="http://www.w3.org/2000/svg"><path d="M20 44 C20 44, 2 30, 2 16 C2 8, 9 4, 14 9 C16 6, 20 5, 20 5 C20 5, 24 6, 26 9 C31 4, 38 8, 38 16 C38 30, 20 44, 20 44Z" fill="#ddb98e"/><path d="M20 14 C20 6, 20 2, 20 2" stroke="#b5c4a4" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M20 10 C13 6, 7 9, 10 15 C12 19, 18 15, 20 10Z" fill="#b5c4a4"/><path d="M20 7 C27 2, 33 6, 30 12 C28 16, 22 12, 20 7Z" fill="#b5c4a4"/></svg>Loving <span>Guardian</span> LLC</div>
+    <div class="footer-logo" onclick="showPage('home')">
+      <svg class="footer-logo-svg" viewBox="0 0 40 48" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20 44 C20 44, 2 30, 2 16 C2 8, 9 4, 14 9 C16 6, 20 5, 20 5 C20 5, 24 6, 26 9 C31 4, 38 8, 38 16 C38 30, 20 44, 20 44Z" fill="#ddb98e"/>
+        <path d="M20 14 C20 6, 20 2, 20 2" stroke="#b5c4a4" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <path d="M20 10 C13 6, 7 9, 10 15 C12 19, 18 15, 20 10Z" fill="#b5c4a4"/>
+        <path d="M20 7 C27 2, 33 6, 30 12 C28 16, 22 12, 20 7Z" fill="#b5c4a4"/>
+      </svg>
+      Loving <span>Guardian</span> LLC
+    </div>
     <ul class="footer-nav">
       <li><a onclick="showPage('about')">About</a></li>
       <li><a onclick="showPage('services')">Services</a></li>
@@ -874,20 +512,18 @@
   </footer>
 </div>
 
-<!-- ══════════════ SERVICES PAGE ══════════════ -->
+<!-- SERVICES -->
 <div id="page-services" class="page">
   <div class="page-header">
     <div class="section-label">What We Offer</div>
     <h1>Services built with <em>heart</em></h1>
     <p>Every care plan is uniquely tailored to the individual — we meet people where they are and support them with patience, compassion, and expertise.</p>
   </div>
-
   <div class="tagline-strip">
     <span class="strip-leaf">🌿</span>
     <p>"Helping hand with a loving heart!"</p>
     <span class="strip-leaf">🌿</span>
   </div>
-
   <section class="services-main">
     <div class="services-intro fade-up">
       <div class="section-label">Our Services</div>
@@ -895,15 +531,14 @@
       <p>From daily companionship to specialized support, Loving Guardian offers a full range of in-home care services designed to keep your loved one comfortable, safe, and connected.</p>
     </div>
     <div class="services-full-grid">
-      <div class="service-full-card fade-up"><div class="sfc-icon">🤝</div><div class="sfc-body"><h3>Companionship</h3><p>Meaningful connection, conversation, and social engagement to brighten your loved one's day and ease feelings of isolation. We believe no senior should feel alone.</p><div class="sfc-tags"><span class="sfc-tag">Conversation</span><span class="sfc-tag">Games &amp; Activities</span><span class="sfc-tag">Outings</span></div></div></div>
-      <div class="service-full-card fade-up"><div class="sfc-icon">💊</div><div class="sfc-body"><h3>Medication Management</h3><p>Careful, consistent reminders and assistance to ensure medications are taken correctly and on time — giving families peace of mind and seniors the safety they deserve.</p><div class="sfc-tags"><span class="sfc-tag">Reminders</span><span class="sfc-tag">Schedule Tracking</span><span class="sfc-tag">Safety Monitoring</span></div></div></div>
-      <div class="service-full-card fade-up"><div class="sfc-icon">🛁</div><div class="sfc-body"><h3>Activities of Daily Living</h3><p>Compassionate, dignified assistance with bathing, grooming, dressing, and personal hygiene — preserving your loved one's independence and self-confidence.</p><div class="sfc-tags"><span class="sfc-tag">Bathing &amp; Grooming</span><span class="sfc-tag">Dressing</span><span class="sfc-tag">Personal Hygiene</span></div></div></div>
-      <div class="service-full-card fade-up"><div class="sfc-icon">🫶</div><div class="sfc-body"><h3>Comfort Care</h3><p>Gentle, attentive support focused on physical and emotional comfort during difficult health journeys — delivered with grace and deep compassion.</p><div class="sfc-tags"><span class="sfc-tag">Emotional Support</span><span class="sfc-tag">Comfort Measures</span><span class="sfc-tag">Family Coordination</span></div></div></div>
-      <div class="service-full-card fade-up"><div class="sfc-icon">👴</div><div class="sfc-body"><h3>Senior Care Needs</h3><p>Comprehensive, day-to-day care tailored to the unique needs of older adults — from light housekeeping and meal prep to mobility assistance and errands.</p><div class="sfc-tags"><span class="sfc-tag">Housekeeping</span><span class="sfc-tag">Meal Preparation</span><span class="sfc-tag">Mobility Assistance</span></div></div></div>
-      <div class="service-full-card fade-up"><div class="sfc-icon">📋</div><div class="sfc-body"><h3>Personalized Care Plans</h3><p>We work closely with clients and families to design a care plan that fits specific needs, schedules, and preferences — and we revisit it as needs evolve over time.</p><div class="sfc-tags"><span class="sfc-tag">Custom Schedule</span><span class="sfc-tag">Family Collaboration</span><span class="sfc-tag">Flexible &amp; Adaptable</span></div></div></div>
+      <div class="service-full-card fade-up"><div class="sfc-icon">🤝</div><div class="sfc-body"><h3>Companionship</h3><p>Meaningful connection, conversation, and social engagement to brighten your loved one's day and ease feelings of isolation.</p><div class="sfc-tags"><span class="sfc-tag">Conversation</span><span class="sfc-tag">Games &amp; Activities</span><span class="sfc-tag">Outings</span></div></div></div>
+      <div class="service-full-card fade-up"><div class="sfc-icon">💊</div><div class="sfc-body"><h3>Medication Management</h3><p>Careful, consistent reminders and assistance to ensure medications are taken correctly and on time — giving families peace of mind.</p><div class="sfc-tags"><span class="sfc-tag">Reminders</span><span class="sfc-tag">Schedule Tracking</span><span class="sfc-tag">Safety Monitoring</span></div></div></div>
+      <div class="service-full-card fade-up"><div class="sfc-icon">🛁</div><div class="sfc-body"><h3>Activities of Daily Living</h3><p>Compassionate, dignified assistance with bathing, grooming, dressing, and personal hygiene — preserving independence and self-confidence.</p><div class="sfc-tags"><span class="sfc-tag">Bathing &amp; Grooming</span><span class="sfc-tag">Dressing</span><span class="sfc-tag">Personal Hygiene</span></div></div></div>
+      <div class="service-full-card fade-up"><div class="sfc-icon">🫶</div><div class="sfc-body"><h3>Comfort Care</h3><p>Gentle, attentive support focused on physical and emotional comfort during difficult health journeys — delivered with grace and compassion.</p><div class="sfc-tags"><span class="sfc-tag">Emotional Support</span><span class="sfc-tag">Comfort Measures</span><span class="sfc-tag">Family Coordination</span></div></div></div>
+      <div class="service-full-card fade-up"><div class="sfc-icon">👴</div><div class="sfc-body"><h3>Senior Care Needs</h3><p>Comprehensive, day-to-day care tailored to the unique needs of older adults — from light housekeeping and meal prep to mobility assistance.</p><div class="sfc-tags"><span class="sfc-tag">Housekeeping</span><span class="sfc-tag">Meal Preparation</span><span class="sfc-tag">Mobility Assistance</span></div></div></div>
+      <div class="service-full-card fade-up"><div class="sfc-icon">📋</div><div class="sfc-body"><h3>Personalized Care Plans</h3><p>We work closely with clients and families to design a care plan that fits specific needs, schedules, and preferences — and revisit it as needs evolve.</p><div class="sfc-tags"><span class="sfc-tag">Custom Schedule</span><span class="sfc-tag">Family Collaboration</span><span class="sfc-tag">Flexible &amp; Adaptable</span></div></div></div>
     </div>
   </section>
-
   <section class="how-it-works">
     <div class="hiw-header fade-up">
       <div class="section-label">The Process</div>
@@ -917,15 +552,21 @@
       <div class="step fade-up"><div class="step-num">4</div><h4>Care Begins</h4><p>Your loved one starts receiving compassionate, consistent care — and you get peace of mind.</p></div>
     </div>
   </section>
-
   <div class="pricing-note fade-up">
     <h2>Let's talk about what <em>fits your family</em></h2>
     <p>Care needs and schedules vary widely. Contact us for a free consultation and we'll put together a plan that works for your loved one and your family's budget.</p>
     <button class="btn-primary" onclick="showPage('contact')">Request a Free Consultation</button>
   </div>
-
   <footer>
-    <div class="footer-logo" onclick="showPage('home')"><svg style="height:28px;width:auto;margin-right:8px;vertical-align:middle" viewBox="0 0 40 48" xmlns="http://www.w3.org/2000/svg"><path d="M20 44 C20 44, 2 30, 2 16 C2 8, 9 4, 14 9 C16 6, 20 5, 20 5 C20 5, 24 6, 26 9 C31 4, 38 8, 38 16 C38 30, 20 44, 20 44Z" fill="#ddb98e"/><path d="M20 14 C20 6, 20 2, 20 2" stroke="#b5c4a4" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M20 10 C13 6, 7 9, 10 15 C12 19, 18 15, 20 10Z" fill="#b5c4a4"/><path d="M20 7 C27 2, 33 6, 30 12 C28 16, 22 12, 20 7Z" fill="#b5c4a4"/></svg>Loving <span>Guardian</span> LLC</div>
+    <div class="footer-logo" onclick="showPage('home')">
+      <svg class="footer-logo-svg" viewBox="0 0 40 48" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20 44 C20 44, 2 30, 2 16 C2 8, 9 4, 14 9 C16 6, 20 5, 20 5 C20 5, 24 6, 26 9 C31 4, 38 8, 38 16 C38 30, 20 44, 20 44Z" fill="#ddb98e"/>
+        <path d="M20 14 C20 6, 20 2, 20 2" stroke="#b5c4a4" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <path d="M20 10 C13 6, 7 9, 10 15 C12 19, 18 15, 20 10Z" fill="#b5c4a4"/>
+        <path d="M20 7 C27 2, 33 6, 30 12 C28 16, 22 12, 20 7Z" fill="#b5c4a4"/>
+      </svg>
+      Loving <span>Guardian</span> LLC
+    </div>
     <ul class="footer-nav">
       <li><a onclick="showPage('about')">About</a></li>
       <li><a onclick="showPage('services')">Services</a></li>
@@ -937,20 +578,18 @@
   </footer>
 </div>
 
-<!-- ══════════════ FAQ PAGE ══════════════ -->
+<!-- FAQ -->
 <div id="page-faq" class="page">
   <div class="page-header">
     <div class="section-label">Questions &amp; Answers</div>
     <h1>Everything you need to <em>know</em></h1>
     <p>We know choosing care for a loved one comes with a lot of questions. Here are the ones families ask us most.</p>
   </div>
-
   <div class="tagline-strip">
     <span class="strip-leaf">🌿</span>
     <p>"Helping hand with a loving heart!"</p>
     <span class="strip-leaf">🌿</span>
   </div>
-
   <section class="faq-main">
     <div class="faq-intro fade-up">
       <div class="section-label">Common Questions</div>
@@ -958,82 +597,31 @@
       <p>Don't see what you're looking for? Reach out and we'll be happy to help.</p>
     </div>
     <div class="faq-grid">
-
-      <div class="faq-item fade-up">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          What areas do you serve?
-          <span class="faq-arrow">▾</span>
-        </button>
-        <div class="faq-answer">We proudly serve the Dallas–Fort Worth metropolitan area, including Dallas, Fort Worth, Plano, Frisco, Allen, McKinney, Garland, Irving, Arlington, Richardson, Carrollton, and surrounding communities. Not sure if we cover your area? Give us a call and we'll let you know.</div>
-      </div>
-
-      <div class="faq-item fade-up">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          How do I get started?
-          <span class="faq-arrow">▾</span>
-        </button>
-        <div class="faq-answer">Getting started is simple. Reach out by phone, email, or our contact form and we'll schedule a free consultation. During that call we learn about your loved one's needs and preferences, then build a personalized care plan together. Care can typically begin within a few days.</div>
-      </div>
-
-      <div class="faq-item fade-up">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          What hours are you available?
-          <span class="faq-arrow">▾</span>
-        </button>
-        <div class="faq-answer">Our standard hours are Monday through Sunday, 9:00 AM to 5:00 PM. We understand that care needs don't always follow a schedule — contact us directly to discuss extended or after-hours availability for your situation.</div>
-      </div>
-
-      <div class="faq-item fade-up">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          Do you offer personalized care plans?
-          <span class="faq-arrow">▾</span>
-        </button>
-        <div class="faq-answer">Absolutely. Every client receives a care plan built specifically for them. We work closely with you and your family to understand your loved one's routines, preferences, medical needs, and personality — and we revisit the plan regularly as needs change over time.</div>
-      </div>
-
-      <div class="faq-item fade-up">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          What types of care do you provide?
-          <span class="faq-arrow">▾</span>
-        </button>
-        <div class="faq-answer">We offer companionship, medication management, assistance with activities of daily living (bathing, grooming, dressing), comfort care, mobility assistance, light housekeeping, meal preparation, and more. Visit our Services page for the full list.</div>
-      </div>
-
-      <div class="faq-item fade-up">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          How do you select your caregivers?
-          <span class="faq-arrow">▾</span>
-        </button>
-        <div class="faq-answer">We are very selective. Our caregivers are chosen not only for their experience and qualifications, but for their warmth, patience, and genuine passion for serving others. Every caregiver we place shares the values that Loving Guardian was built on.</div>
-      </div>
-
-      <div class="faq-item fade-up">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          How much does care cost?
-          <span class="faq-arrow">▾</span>
-        </button>
-        <div class="faq-answer">Costs vary depending on the level of care, number of hours, and specific services needed. We believe quality care should be accessible — contact us for a free consultation and we'll be transparent about pricing and help you find a plan that fits your family's budget.</div>
-      </div>
-
-      <div class="faq-item fade-up">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          Can family members stay involved in care?
-          <span class="faq-arrow">▾</span>
-        </button>
-        <div class="faq-answer">We encourage it. Loving Guardian takes a family-centered approach — we keep family members informed, welcome their input, and see them as partners in care. Your loved one's wellbeing is a team effort, and we're honored to be part of that team.</div>
-      </div>
-
+      <div class="faq-item fade-up"><button class="faq-question" onclick="toggleFaq(this)">What areas do you serve?<span class="faq-arrow">▾</span></button><div class="faq-answer">We proudly serve the Dallas–Fort Worth metropolitan area, including Dallas, Fort Worth, Plano, Frisco, Allen, McKinney, Garland, Irving, Arlington, Richardson, Carrollton, and surrounding communities. Not sure if we cover your area? Give us a call and we'll let you know.</div></div>
+      <div class="faq-item fade-up"><button class="faq-question" onclick="toggleFaq(this)">How do I get started?<span class="faq-arrow">▾</span></button><div class="faq-answer">Getting started is simple. Reach out by phone, email, or our contact form and we'll schedule a free consultation. During that call we learn about your loved one's needs and preferences, then build a personalized care plan together. Care can typically begin within a few days.</div></div>
+      <div class="faq-item fade-up"><button class="faq-question" onclick="toggleFaq(this)">What hours are you available?<span class="faq-arrow">▾</span></button><div class="faq-answer">Our standard hours are Monday through Sunday, 9:00 AM to 5:00 PM. We understand that care needs don't always follow a schedule — contact us directly to discuss extended or after-hours availability for your situation.</div></div>
+      <div class="faq-item fade-up"><button class="faq-question" onclick="toggleFaq(this)">Do you offer personalized care plans?<span class="faq-arrow">▾</span></button><div class="faq-answer">Absolutely. Every client receives a care plan built specifically for them. We work closely with you and your family to understand your loved one's routines, preferences, medical needs, and personality — and we revisit the plan regularly as needs change over time.</div></div>
+      <div class="faq-item fade-up"><button class="faq-question" onclick="toggleFaq(this)">What types of care do you provide?<span class="faq-arrow">▾</span></button><div class="faq-answer">We offer companionship, medication management, assistance with activities of daily living (bathing, grooming, dressing), comfort care, mobility assistance, light housekeeping, meal preparation, and more. Visit our Services page for the full list.</div></div>
+      <div class="faq-item fade-up"><button class="faq-question" onclick="toggleFaq(this)">How do you select your caregivers?<span class="faq-arrow">▾</span></button><div class="faq-answer">We are very selective. Our caregivers are chosen not only for their experience and qualifications, but for their warmth, patience, and genuine passion for serving others. Every caregiver we place shares the values that Loving Guardian was built on.</div></div>
+      <div class="faq-item fade-up"><button class="faq-question" onclick="toggleFaq(this)">How much does care cost?<span class="faq-arrow">▾</span></button><div class="faq-answer">Costs vary depending on the level of care, number of hours, and specific services needed. We believe quality care should be accessible — contact us for a free consultation and we'll be transparent about pricing and help you find a plan that fits your family's budget.</div></div>
+      <div class="faq-item fade-up"><button class="faq-question" onclick="toggleFaq(this)">Can family members stay involved in care?<span class="faq-arrow">▾</span></button><div class="faq-answer">We encourage it. Loving Guardian takes a family-centered approach — we keep family members informed, welcome their input, and see them as partners in care. Your loved one's wellbeing is a team effort, and we're honored to be part of that team.</div></div>
     </div>
   </section>
-
   <div class="faq-cta-band fade-up">
     <h2>Still have <em>questions?</em></h2>
     <p>We're happy to talk through anything. Reach out and a care coordinator will get back to you within one business day.</p>
     <button class="btn-primary" onclick="showPage('contact')">Contact Us</button>
   </div>
-
   <footer>
-    <div class="footer-logo" onclick="showPage('home')"><svg style="height:28px;width:auto;margin-right:8px;vertical-align:middle" viewBox="0 0 40 48" xmlns="http://www.w3.org/2000/svg"><path d="M20 44 C20 44, 2 30, 2 16 C2 8, 9 4, 14 9 C16 6, 20 5, 20 5 C20 5, 24 6, 26 9 C31 4, 38 8, 38 16 C38 30, 20 44, 20 44Z" fill="#ddb98e"/><path d="M20 14 C20 6, 20 2, 20 2" stroke="#b5c4a4" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M20 10 C13 6, 7 9, 10 15 C12 19, 18 15, 20 10Z" fill="#b5c4a4"/><path d="M20 7 C27 2, 33 6, 30 12 C28 16, 22 12, 20 7Z" fill="#b5c4a4"/></svg>Loving <span>Guardian</span> LLC</div>
+    <div class="footer-logo" onclick="showPage('home')">
+      <svg class="footer-logo-svg" viewBox="0 0 40 48" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20 44 C20 44, 2 30, 2 16 C2 8, 9 4, 14 9 C16 6, 20 5, 20 5 C20 5, 24 6, 26 9 C31 4, 38 8, 38 16 C38 30, 20 44, 20 44Z" fill="#ddb98e"/>
+        <path d="M20 14 C20 6, 20 2, 20 2" stroke="#b5c4a4" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <path d="M20 10 C13 6, 7 9, 10 15 C12 19, 18 15, 20 10Z" fill="#b5c4a4"/>
+        <path d="M20 7 C27 2, 33 6, 30 12 C28 16, 22 12, 20 7Z" fill="#b5c4a4"/>
+      </svg>
+      Loving <span>Guardian</span> LLC
+    </div>
     <ul class="footer-nav">
       <li><a onclick="showPage('about')">About</a></li>
       <li><a onclick="showPage('services')">Services</a></li>
@@ -1045,20 +633,18 @@
   </footer>
 </div>
 
-<!-- ══════════════ CONTACT PAGE ══════════════ -->
+<!-- CONTACT -->
 <div id="page-contact" class="page">
   <div class="page-header">
     <div class="section-label">Get In Touch</div>
     <h1>Let's find the <em>right care</em> together</h1>
     <p>Whether you have questions or are ready to get started, we'd love to hear from you. A care coordinator will follow up within one business day.</p>
   </div>
-
   <div class="tagline-strip">
     <span class="strip-leaf">🌿</span>
     <p>"Helping hand with a loving heart!"</p>
     <span class="strip-leaf">🌿</span>
   </div>
-
   <section class="contact-main">
     <div class="contact-left fade-up">
       <div class="section-label">Contact Information</div>
@@ -1066,12 +652,11 @@
       <p>Reach out by phone, email, or fill out the form. No question is too small — we're here to help you navigate care for your loved one.</p>
       <div class="contact-cards">
         <div class="contact-card"><div class="cc-icon">📞</div><div class="cc-body"><strong>Phone</strong><a href="tel:4694965566">(469) 496-5566</a></div></div>
-        <div class="contact-card"><div class="cc-icon">✉️</div><div class="cc-body"><strong>Email</strong><a href="/cdn-cgi/l/email-protection#82f6ebece7f0e3c2eee5e1e3f0e7eeeee1ace1edef"><span class="__cf_email__" data-cfemail="d8acb1b6bdaab998b4bfbbb9aabdb4b4bbf6bbb7b5">[email&#160;protected]</span></a></div></div>
+        <div class="contact-card"><div class="cc-icon">✉️</div><div class="cc-body"><strong>Email</strong><a href="mailto:tinera@lgcarellc.com">tinera&#64;lgcarellc.com</a></div></div>
         <div class="contact-card"><div class="cc-icon">🕐</div><div class="cc-body"><strong>Hours of Operation</strong><p>Monday – Sunday, 9:00 AM – 5:00 PM</p></div></div>
         <div class="contact-card"><div class="cc-icon">📍</div><div class="cc-body"><strong>Service Area</strong><p>Dallas–Fort Worth Metropolitan Area</p></div></div>
       </div>
     </div>
-
     <div class="contact-form-box fade-up">
       <div id="formContent">
         <h3>Request Care</h3>
@@ -1092,7 +677,6 @@
       </div>
     </div>
   </section>
-
   <section class="service-area fade-up">
     <div class="section-label">Where We Serve</div>
     <h2>Proudly serving the <em>DFW area</em></h2>
@@ -1109,9 +693,16 @@
       <span class="area-tag">Carrollton</span><span class="area-tag">And Surrounding Areas</span>
     </div>
   </section>
-
   <footer>
-    <div class="footer-logo" onclick="showPage('home')"><svg style="height:28px;width:auto;margin-right:8px;vertical-align:middle" viewBox="0 0 40 48" xmlns="http://www.w3.org/2000/svg"><path d="M20 44 C20 44, 2 30, 2 16 C2 8, 9 4, 14 9 C16 6, 20 5, 20 5 C20 5, 24 6, 26 9 C31 4, 38 8, 38 16 C38 30, 20 44, 20 44Z" fill="#ddb98e"/><path d="M20 14 C20 6, 20 2, 20 2" stroke="#b5c4a4" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M20 10 C13 6, 7 9, 10 15 C12 19, 18 15, 20 10Z" fill="#b5c4a4"/><path d="M20 7 C27 2, 33 6, 30 12 C28 16, 22 12, 20 7Z" fill="#b5c4a4"/></svg>Loving <span>Guardian</span> LLC</div>
+    <div class="footer-logo" onclick="showPage('home')">
+      <svg class="footer-logo-svg" viewBox="0 0 40 48" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20 44 C20 44, 2 30, 2 16 C2 8, 9 4, 14 9 C16 6, 20 5, 20 5 C20 5, 24 6, 26 9 C31 4, 38 8, 38 16 C38 30, 20 44, 20 44Z" fill="#ddb98e"/>
+        <path d="M20 14 C20 6, 20 2, 20 2" stroke="#b5c4a4" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <path d="M20 10 C13 6, 7 9, 10 15 C12 19, 18 15, 20 10Z" fill="#b5c4a4"/>
+        <path d="M20 7 C27 2, 33 6, 30 12 C28 16, 22 12, 20 7Z" fill="#b5c4a4"/>
+      </svg>
+      Loving <span>Guardian</span> LLC
+    </div>
     <ul class="footer-nav">
       <li><a onclick="showPage('about')">About</a></li>
       <li><a onclick="showPage('services')">Services</a></li>
@@ -1123,7 +714,7 @@
   </footer>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
   function showPage(name) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.getElementById('page-' + name).classList.add('active');
@@ -1169,4 +760,15 @@
 
   function submitForm() {
     const fname = document.getElementById('fname').value.trim();
-    const phone = document.getElementById('phone').v
+    const phone = document.getElementById('phone').value.trim();
+    const email = document.getElementById('email').value.trim();
+    if (!fname || (!phone && !email)) {
+      alert('Please fill in your name and at least a phone number or email.');
+      return;
+    }
+    document.getElementById('formContent').style.display = 'none';
+    document.getElementById('formSuccess').style.display = 'block';
+  }
+</script>
+</body>
+</html>
