@@ -221,6 +221,7 @@
     .form-group textarea { resize: vertical; min-height: 110px; }
     .form-submit { width: 100%; padding: 1rem; background: var(--clay); color: #fff; border: none; border-radius: 2rem; cursor: pointer; font-family: 'Jost', sans-serif; font-size: .88rem; letter-spacing: .12em; text-transform: uppercase; transition: all .25s; margin-top: .5rem; }
     .form-submit:hover { background: var(--bark); transform: translateY(-1px); }
+    .form-submit:disabled { opacity: .6; cursor: not-allowed; transform: none; }
     .form-success { display: none; text-align: center; padding: 2rem; }
     .form-success .success-icon { font-size: 3rem; margin-bottom: 1rem; }
     .form-success h4 { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; color: var(--bark); margin-bottom: .5rem; }
@@ -668,7 +669,7 @@
         <div class="form-group"><label>Phone Number</label><input type="tel" placeholder="(000) 000-0000" id="phone"></div>
         <div class="form-group"><label>Email Address</label><input type="email" placeholder="your@email.com" id="email"></div>
         <div class="form-group"><label>Tell Us About Your Loved One</label><textarea placeholder="Brief description of care needs, schedule preferences, or questions..." id="message"></textarea></div>
-        <button class="form-submit" onclick="submitForm()">Send Request &#8594;</button>
+        <button class="form-submit" id="submitBtn" onclick="submitForm()">Send Request &#8594;</button>
       </div>
       <div class="form-success" id="formSuccess">
         <div class="success-icon">💚</div>
@@ -760,14 +761,50 @@
 
   function submitForm() {
     const fname = document.getElementById('fname').value.trim();
+    const lname = document.getElementById('lname').value.trim();
     const phone = document.getElementById('phone').value.trim();
     const email = document.getElementById('email').value.trim();
+    const message = document.getElementById('message').value.trim();
+
     if (!fname || (!phone && !email)) {
       alert('Please fill in your name and at least a phone number or email.');
       return;
     }
-    document.getElementById('formContent').style.display = 'none';
-    document.getElementById('formSuccess').style.display = 'block';
+
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
+
+    const data = {
+      access_key: 'cadda00d-fa95-4e34-98f7-e96c26767774',
+      name: fname + ' ' + lname,
+      phone: phone,
+      email: email,
+      message: message,
+      subject: 'New Care Request — Loving Guardian'
+    };
+
+    fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        document.getElementById('formContent').style.display = 'none';
+        document.getElementById('formSuccess').style.display = 'block';
+      } else {
+        alert('Something went wrong. Please try again.');
+        btn.disabled = false;
+        btn.textContent = 'Send Request →';
+      }
+    })
+    .catch(() => {
+      alert('Something went wrong. Please try again.');
+      btn.disabled = false;
+      btn.textContent = 'Send Request →';
+    });
   }
 </script>
 </body>
