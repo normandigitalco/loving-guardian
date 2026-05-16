@@ -960,7 +960,10 @@
 </div>
 
 <script>
-  function showPage(name) {
+  var pathMap = { '/': 'home', '/about': 'about', '/services': 'services', '/gallery': 'gallery', '/faq': 'faq', '/contact': 'contact' };
+  var reverseMap = { 'home': '/', 'about': '/about', 'services': '/services', 'gallery': '/gallery', 'faq': '/faq', 'contact': '/contact' };
+
+  function showPage(name, pushState) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.getElementById('page-' + name).classList.add('active');
     document.querySelectorAll('.nav-links a').forEach(a => {
@@ -971,7 +974,22 @@
       document.querySelectorAll('#page-' + name + ' .fade-up').forEach(el => el.classList.remove('visible'));
       initFadeUps();
     }, 50);
+    if (pushState !== false && window.history && window.history.pushState) {
+      window.history.pushState({ page: name }, '', reverseMap[name] || '/');
+    }
   }
+
+  window.addEventListener('popstate', function(e) {
+    var page = (e.state && e.state.page) || 'home';
+    showPage(page, false);
+  });
+
+  // Load correct page on direct URL visit
+  (function() {
+    var path = window.location.pathname.replace(/\/$/, '') || '/';
+    var initPage = pathMap[path] || 'home';
+    if (initPage !== 'home') showPage(initPage, false);
+  })();
   function initFadeUps() {
     var obs = new IntersectionObserver(function(entries) {
       entries.forEach(function(e) {
